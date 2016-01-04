@@ -5,3 +5,4 @@ typedef struct arr {
 } Arr;
 
 Arr create(int type_size,int length);
+int are_equal(Arr,Arr);
