@@ -1,23 +1,32 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <assert.h>
+#include <string.h>
 #include "arrayUtil.h"
 
-Arr create(int type_size,int length){
-    Arr *new_arr=(Arr *)calloc(length,type_size);
-    new_arr->type_size = type_size;
-    new_arr->length = length;
-    new_arr->base = new_arr;
-    printf("Array base: %ld\n", new_arr->base);
-    return *new_arr;
-}
+ArrayUtil create(int type_size, int length) {
+  ArrayUtil *new_arr = (ArrayUtil *)calloc(length, type_size);
+  new_arr->type_size = type_size;
+  new_arr->length = length;
+  new_arr->base = new_arr;
+  return *new_arr;
+};
 
-int are_equal(Arr a,Arr b) {
-  if(a.length != b.length && a.type_size != b.type_size)
-    return 0;
-  // for (size_t i = 0; i < a.length; i++) {
-  //   if(a.base[i] != b.base[i])
-  //     return 0;
-  // }
-  return 1;
-}
+int are_equal(ArrayUtil a, ArrayUtil b) {
+  int length = a.length > b.length ? a.length : b.length;
+  int compare = memcmp(a.base, b.base, length);
+  if (a.length == b.length && a.type_size == b.type_size && compare == 0) {
+    return 1;
+  }
+  return 0;
+};
+
+ArrayUtil resize(ArrayUtil util, int length) {
+  int need_length = util.type_size * length;
+  ArrayUtil *new_arr = realloc(util.base, need_length);
+  new_arr->length = length;
+  return *new_arr;
+};
+
+int findIndex(ArrayUtil util, void *element){
+
+};
