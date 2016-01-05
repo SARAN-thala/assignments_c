@@ -1,6 +1,3 @@
-// typedef char *base_ptr;
-// typedef void *void_ptr;
-
 typedef struct {
   int type_size;
   void *base;
