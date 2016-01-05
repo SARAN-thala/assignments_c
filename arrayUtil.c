@@ -27,6 +27,24 @@ ArrayUtil resize(ArrayUtil util, int length) {
   return *new_arr;
 };
 
-int findIndex(ArrayUtil util, void *element){
+int findIndex(ArrayUtil util, void *element) {
+  void *base = util.base;
+  for (size_t i = 0; i < util.length; i++) {
+    if (((int *)util.base)[i] == *((int *)element))
+      return i;
+  }
+  for (size_t i = 0; i < util.length; i++) {
+    if (((char *)util.base)[i] == *((char *)element))
+      return i;
+  }
+  for (size_t i = 0; i < util.length; i++) {
+    if (((double *)util.base)[i] == *((double *)element))
+      return i;
+  }
+  return -1;
+};
 
+void dispose(ArrayUtil util) {
+  free(util.base);
+  util.base = NULL;
 };
