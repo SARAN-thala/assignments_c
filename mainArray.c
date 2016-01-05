@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include <assert.h>
 #include "arrayUtil.h"
 
@@ -68,7 +69,64 @@ void test_findIndex() {
 //   dispose(e);
 //   assert(e.length == 0);
 // }
+int isEven(void *hint, void *item) {
+  return (*(int *)item % 2) ? 0 : 1;
+  //
+};
 
+int isDivisible(void *hint, void *item) {
+  int *numberPtr = (int *)item;
+  int *hintPtr = (int *)hint;
+  return *numberPtr % *hintPtr ? 0 : 1;
+};
+
+void test_find_first_is_even() {
+  ArrayUtil array = create(sizeof(int), 6);
+  int arr[] = {3, 4, 1, 7, 8, 9}, x, *result;
+  array.base = arr;
+  result = (int *)findFirst(array, &isEven, &x);
+  assert(*result == 4);
+}
+
+void test_find_first_is_divisible() {
+  ArrayUtil array = create(sizeof(int), 6);
+  int arr[] = {2, 4, 6, 7, 8, 9}, x = 3, *result;
+  array.base = arr;
+  result = (int *)findFirst(array, &isDivisible, &x);
+  assert(*result == 6);
+}
+
+void test_find_last_is_even() {
+  ArrayUtil array = create(sizeof(int), 6);
+  int arr[] = {3, 4, 1, 7, 8, 9}, x, *result;
+  array.base = arr;
+  result = (int *)findLast(array, &isEven, &x);
+  assert(*result == 8);
+};
+
+void test_find_last_is_divisible() {
+  ArrayUtil array = create(sizeof(int), 6);
+  int arr[] = {2, 4, 6, 7, 8, 9}, x = 3, *result;
+  array.base = arr;
+  result = (int *)findLast(array, &isDivisible, &x);
+  assert(*result == 9);
+}
+
+void test_count_is_even() {
+  ArrayUtil array = create(sizeof(int), 6);
+  int arr[] = {3, 4, 1, 7, 8, 9}, x, result;
+  array.base = arr;
+  result = count(array, &isEven, &x);
+  assert(result == 2);
+};
+
+void test_count_is_divisible() {
+  ArrayUtil array = create(sizeof(int), 6);
+  int arr[] = {3, 4, 6, 7, 8, 9}, x = 3, result;
+  array.base = arr;
+  result = count(array, &isDivisible, &x);
+  assert(result == 3);
+}
 // -------main fn----------------------------------------
 int main() {
   test_create();
@@ -76,5 +134,11 @@ int main() {
   test_resize();
   test_findIndex();
   // test_dispose();
+  test_find_first_is_even();
+  test_find_first_is_divisible();
+  test_find_last_is_even();
+  test_find_last_is_divisible();
+  test_count_is_even();
+  test_count_is_divisible();
   return 0;
 };

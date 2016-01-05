@@ -30,19 +30,9 @@ ArrayUtil resize(ArrayUtil util, int length) {
 int findIndex(ArrayUtil util, void *element) {
   void *base = util.base;
   for (size_t i = 0; i < util.length; i++) {
-    if (memcmp(base, element, util.type_size) == 0) {
+    if (memcmp(base + (util.type_size * i), element, util.type_size) == 0)
       return i;
-    }
-    base = base + util.type_size;
   }
-  // for (size_t i = 0; i < util.length; i++) {
-  //   if (((char *)util.base)[i] == *((char *)element))
-  //     return i;
-  // }
-  // for (size_t i = 0; i < util.length; i++) {
-  //   if (((double *)util.base)[i] == *((double *)element))
-  //     return i;
-  // }
   return -1;
 };
 
@@ -50,3 +40,37 @@ void dispose(ArrayUtil util) {
   free(util.base);
   util.base = NULL;
 };
+
+void *findFirst(ArrayUtil util, MatchFunc *match, void *hint) {
+  void *array = util.base;
+  void *element;
+  for (size_t i = 0; i < util.length; i++) {
+    element = &(array[i * util.type_size]);
+    if (match(hint, element))
+      return element;
+  }
+  return 0;
+}
+
+void *findLast(ArrayUtil util, MatchFunc *match, void *hint) {
+  void *array = util.base;
+  void *element;
+  for (int i = (util.length - 1); i >= 0; i--) {
+    element = &(array[i * util.type_size]);
+    if (match(hint, element))
+      return element;
+  }
+  return 0;
+}
+
+int count(ArrayUtil util, MatchFunc *match, void *hint) {
+  int counter = 0;
+  void *array = util.base;
+  void *element;
+  for (size_t i = 0; i < util.length; i++) {
+    element = &(array[i * util.type_size]);
+    if (match(hint, element))
+      counter++;
+  }
+  return counter;
+}
