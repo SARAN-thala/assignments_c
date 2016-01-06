@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <assert.h>
 #include "arrayUtil.h"
@@ -33,10 +34,19 @@ void test_are_equal() {
 };
 
 void test_resize() {
-  ArrayUtil util = create(1, 3);
   int length;
-  ArrayUtil new_arr = resize(util, length);
-  assert(new_arr.length == length);
+  ArrayUtil util = create(sizeof(int), 3);
+  ArrayUtil util1 = create(sizeof(char), 4);
+  ArrayUtil util2 = create(sizeof(float), 6);
+  ArrayUtil util3 = create(sizeof(double), 5);
+  ArrayUtil new_arr = resize(util, 10);
+  assert(new_arr.length == 10);
+  ArrayUtil new_arr1 = resize(util1, 20);
+  assert(new_arr1.length == 20);
+  ArrayUtil new_arr2 = resize(util2, 12);
+  assert(new_arr2.length == 12);
+  ArrayUtil new_arr3 = resize(util3, 22);
+  assert(new_arr3.length == 22);
 };
 
 void test_findIndex() {
@@ -62,13 +72,6 @@ void test_findIndex() {
   assert(findIndex(a4, &w) == 1);
 };
 
-// void test_dispose() {
-//   ArrayUtil e = create(sizeof(int), 22);
-//   assert(e.length == 22);
-//   assert(e.type_size == 4);
-//   dispose(e);
-//   assert(e.length == 0);
-// }
 int isEven(void *hint, void *item) {
   return (*(int *)item % 2) ? 0 : 1;
   //
@@ -126,19 +129,4 @@ void test_count_is_divisible() {
   array.base = arr;
   result = count(array, &isDivisible, &x);
   assert(result == 3);
-}
-// -------main fn----------------------------------------
-int main() {
-  test_create();
-  test_are_equal();
-  test_resize();
-  test_findIndex();
-  // test_dispose();
-  test_find_first_is_even();
-  test_find_first_is_divisible();
-  test_find_last_is_even();
-  test_find_last_is_divisible();
-  test_count_is_even();
-  test_count_is_divisible();
-  return 0;
 };

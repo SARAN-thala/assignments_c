@@ -4,11 +4,11 @@
 #include "arrayUtil.h"
 
 ArrayUtil create(int type_size, int length) {
-  ArrayUtil *new_arr = (ArrayUtil *)calloc(length, type_size);
-  new_arr->type_size = type_size;
-  new_arr->length = length;
-  new_arr->base = new_arr;
-  return *new_arr;
+  ArrayUtil new_arr;
+  new_arr.type_size = type_size;
+  new_arr.length = length;
+  new_arr.base = calloc(length, type_size);
+  return new_arr;
 };
 
 int are_equal(ArrayUtil a, ArrayUtil b) {
@@ -22,9 +22,10 @@ int are_equal(ArrayUtil a, ArrayUtil b) {
 
 ArrayUtil resize(ArrayUtil util, int length) {
   int need_length = util.type_size * length;
-  ArrayUtil *new_arr = realloc(util.base, need_length);
-  new_arr->length = length;
-  return *new_arr;
+  ArrayUtil new_arr;
+  new_arr.base = realloc(util.base, need_length);
+  new_arr.length = length;
+  return new_arr;
 };
 
 int findIndex(ArrayUtil util, void *element) {
@@ -74,3 +75,19 @@ int count(ArrayUtil util, MatchFunc *match, void *hint) {
   }
   return counter;
 }
+
+int filter(ArrayUtil util, MatchFunc *match, void *hint, void **destination,
+           int maxItems) {
+  int count = 0;
+  char **dest = (char **)destination;
+  char *base = (char *)util.base;
+  void *element;
+  for (int i = 0; i < util.length; i++) {
+    element = &(base[i * util.type_size]);
+    if (match(hint, (void *)element) && count < maxItems) {
+      memcpy(&((*dest)[count * util.type_size]), element, util.type_size);
+      count++;
+    }
+  }
+  return count;
+};
