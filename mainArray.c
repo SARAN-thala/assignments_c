@@ -6,31 +6,46 @@
 
 void test_create() {
   ArrayUtil a = create(sizeof(double), 3);
+  double array[] = {3.122, 4.3121, 1.2211};
+  a.base = array;
   assert(a.length == 3);
   assert(a.type_size == 8);
+
   ArrayUtil b = create(sizeof(int), 5);
+  int arr[] = {3, 4, 1, 7, 8};
+  b.base = arr;
   assert(b.length == 5);
   assert(b.type_size == 4);
+
   ArrayUtil c = create(sizeof(char), 2);
+  char ar[] = {'a', 'b'};
+  c.base = ar;
   assert(c.length == 2);
   assert(c.type_size == 1);
-  assert(b.type_size == 4);
-  ArrayUtil d = create(sizeof(float), 12);
-  assert(d.length == 12);
+
+  ArrayUtil d = create(sizeof(float), 4);
+  float arr1[] = {3.122, 4.3121, 1.2211, 2.00};
+  d.base = arr1;
+  assert(d.length == 4);
   assert(d.type_size == 4);
+
   ArrayUtil e = create(sizeof(void), 22);
   assert(e.length == 22);
   assert(e.type_size == 1);
-  dispose(a);
 };
 
 void test_are_equal() {
-  ArrayUtil a = create(1, 3);
-  ArrayUtil b = create(1, 3);
+  ArrayUtil a = create(sizeof(int), 3);
+  ArrayUtil b = create(sizeof(float), 3);
+  ArrayUtil c = create(sizeof(char), 3);
+  ArrayUtil d = create(sizeof(double), 3);
   assert(are_equal(a, b) == 1);
   assert(are_equal(b, a) == 1);
   assert(are_equal(b, b) == 1);
   assert(are_equal(a, a) == 1);
+  assert(are_equal(a, c) == 0);
+  assert(are_equal(a, d) == 0);
+  assert(are_equal(c, d) == 0);
 };
 
 void test_resize() {
