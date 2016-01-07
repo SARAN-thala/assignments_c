@@ -145,3 +145,31 @@ void test_count_is_divisible() {
   result = count(array, &isDivisible, &x);
   assert(result == 3);
 };
+
+void test_filter_returns_only_even_numbers() {
+  int x;
+  int maxItems = 5;
+  ArrayUtil array = create(sizeof(int), 5);
+  int base[] = {1, 22, 66, 46, 96};
+  // int *base = (int *)array.base;
+  array.base = base;
+  ArrayUtil dest = create(sizeof(int), maxItems);
+  assert(filter(array, &isEven, &x, &dest.base, maxItems) == 4);
+  int *result = (int *)dest.base;
+  assert(result[0] == 22);
+  assert(result[1] == 66);
+  assert(result[2] == 46);
+  assert(result[3] == 96);
+};
+void test_filter_is_divisible() {
+  int x = 3;
+  int maxItems = 5;
+  ArrayUtil array = create(sizeof(int), 5);
+  int base[] = {1, 22, 66, 46, 96};
+  array.base = base;
+  ArrayUtil dest = create(sizeof(int), maxItems);
+  assert(filter(array, &isDivisible, &x, &dest.base, maxItems) == 2);
+  int *result = (int *)dest.base;
+  assert(result[0] == 66);
+  assert(result[1] == 96);
+};

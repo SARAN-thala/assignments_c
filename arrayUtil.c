@@ -79,14 +79,14 @@ int count(ArrayUtil util, MatchFunc *match, void *hint) {
 int filter(ArrayUtil util, MatchFunc *match, void *hint, void **destination,
            int maxItems) {
   int count = 0;
-  char **dest = (char **)destination;
-  char *base = (char *)util.base;
-  void *element;
+  void *base;
   for (int i = 0; i < util.length; i++) {
-    element = &(base[i * util.type_size]);
-    if (match(hint, (void *)element) && count < maxItems) {
-      memcpy(&((*dest)[count * util.type_size]), element, util.type_size);
-      count++;
+    base = util.base + (i * util.type_size);
+    if (count < maxItems) {
+      if (match(hint, base)) {
+        memcpy(*destination + (count * util.type_size), base, util.type_size);
+        count++;
+      }
     }
   }
   return count;
