@@ -5,6 +5,7 @@ typedef struct {
 } ArrayUtil;
 
 typedef int(MatchFunc)(void *, void *);
+typedef void(ConvertFunc)(void *, void *, void *);
 
 ArrayUtil create(int type_size, int length);
 int are_equal(ArrayUtil a, ArrayUtil b);
@@ -14,4 +15,7 @@ void dispose(ArrayUtil util);
 void *findFirst(ArrayUtil util, MatchFunc *, void *hint);
 void *findLast(ArrayUtil util, MatchFunc *, void *hint);
 int count(ArrayUtil util, MatchFunc *match, void *hint);
-int filter(ArrayUtil util, MatchFunc *match, void *hint, void **destination, int maxItems);
+int filter(ArrayUtil util, MatchFunc *match, void *hint, void **destination,
+           int maxItems);
+void map(ArrayUtil source, ArrayUtil destination, ConvertFunc *convert,
+         void *hint);

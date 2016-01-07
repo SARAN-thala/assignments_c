@@ -91,3 +91,12 @@ int filter(ArrayUtil util, MatchFunc *match, void *hint, void **destination,
   }
   return count;
 };
+
+void map(ArrayUtil source, ArrayUtil destination, ConvertFunc *convert,
+         void *hint) {
+  void *item;
+  for (int i = 0; i < source.length; i++) {
+    item = source.base + (i * source.type_size);
+    convert(hint, item, destination.base + (i * source.type_size));
+  }
+};

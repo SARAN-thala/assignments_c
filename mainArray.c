@@ -173,3 +173,23 @@ void test_filter_is_divisible() {
   assert(result[0] == 66);
   assert(result[1] == 96);
 };
+
+void increment(void *hint, void *sourceItem, void *destinationItem) {
+  int a = *(int *)sourceItem;
+  *(int *)destinationItem = a + 1;
+};
+
+void test_map_increment() {
+  int x;
+  ArrayUtil array = create(sizeof(int), 5);
+  int arr[] = {1, 2, 3, 4, 5};
+  array.base = arr;
+  ArrayUtil dest = create(sizeof(int), 5);
+  map(array, dest, &increment, &x);
+  int *result = (int *)dest.base;
+  assert(result[0] = 2);
+  assert(result[1] = 3);
+  assert(result[2] = 4);
+  assert(result[3] = 5);
+  assert(result[4] = 6);
+};
