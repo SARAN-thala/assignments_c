@@ -100,3 +100,11 @@ void map(ArrayUtil source, ArrayUtil destination, ConvertFunc *convert,
     convert(hint, item, destination.base + (i * source.type_size));
   }
 };
+
+void forEach(ArrayUtil util, OperationFunc *operation, void *hint) {
+  void *item;
+  for (int i = 0; i < util.length; i++) {
+    item = util.base + (i * util.type_size);
+    operation(hint, item);
+  }
+};

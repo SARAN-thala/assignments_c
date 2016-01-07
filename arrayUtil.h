@@ -6,6 +6,7 @@ typedef struct {
 
 typedef int(MatchFunc)(void *, void *);
 typedef void(ConvertFunc)(void *, void *, void *);
+typedef void(OperationFunc)(void *, void *);
 
 ArrayUtil create(int type_size, int length);
 int are_equal(ArrayUtil a, ArrayUtil b);
@@ -19,3 +20,4 @@ int filter(ArrayUtil util, MatchFunc *match, void *hint, void **destination,
            int maxItems);
 void map(ArrayUtil source, ArrayUtil destination, ConvertFunc *convert,
          void *hint);
+void forEach(ArrayUtil util, OperationFunc *operation, void *hint);

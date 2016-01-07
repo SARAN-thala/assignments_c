@@ -187,9 +187,28 @@ void test_map_increment() {
   ArrayUtil dest = create(sizeof(int), 5);
   map(array, dest, &increment, &x);
   int *result = (int *)dest.base;
-  assert(result[0] = 2);
-  assert(result[1] = 3);
-  assert(result[2] = 4);
-  assert(result[3] = 5);
-  assert(result[4] = 6);
+  assert(result[0] == 2);
+  assert(result[1] == 3);
+  assert(result[2] == 4);
+  assert(result[3] == 5);
+  assert(result[4] == 6);
+};
+
+void square(void *hint, void *item) {
+  int *result = (int *)item;
+  *result = (*result) * (*result);
+};
+
+void test_forEach_square() {
+  int *x;
+  ArrayUtil array = create(sizeof(int), 5);
+  int arr[] = {1, 2, 3, 4, 5};
+  array.base = arr;
+  forEach(array, square, &x);
+  int *result = (int *)array.base;
+  assert(result[0] == 1);
+  assert(result[1] == 4);
+  assert(result[2] == 9);
+  assert(result[3] == 16);
+  assert(result[4] == 25);
 };
