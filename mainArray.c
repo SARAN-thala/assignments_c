@@ -212,3 +212,19 @@ void test_forEach_square() {
   assert(result[3] == 16);
   assert(result[4] == 25);
 };
+
+void *largest(void *hint, void *previousItem, void *item) {
+  if (*((char *)previousItem) > *((char *)item))
+    return previousItem;
+  return item;
+};
+
+void test_reduce_largest() {
+  int *x;
+  int intialValue = 0;
+  ArrayUtil array = create(sizeof(int), 5);
+  int arr[] = {1, 2, 3, 4, 5};
+  array.base = arr;
+  int value = *(int *)reduce(array, &largest, &x, &intialValue);
+  assert(value == 5);
+};
