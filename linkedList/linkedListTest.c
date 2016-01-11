@@ -4,15 +4,37 @@
 #include "linkedList.h"
 
 void test_empty_create_list() {
-  LinkedList array = createList();
-  assert(array.length == 0);
-  assert(array.head == NULL);
-  assert(array.tail == NULL);
+  LinkedList list = createList();
+  assert(list.length == 0);
+  assert(list.head == NULL);
+  assert(list.tail == NULL);
 };
 
 void test_add_to_list() {
-  LinkedList array = createList();
+  LinkedList list = createList();
   int value = 3;
-  assert(add_to_list(&array, &value) == 1);
-  assert(add_to_list(&array, &value) != 0);
+  assert(add_to_list(&list, &value) == 1);
+  assert(add_to_list(&list, &value) != 0);
+};
+
+void test_get_first_element() {
+  LinkedList list = createList();
+  int value = 4;
+  int value1 = 3;
+  int value2 = 7;
+  add_to_list(&list, &value);
+  add_to_list(&list, &value1);
+  add_to_list(&list, &value2);
+  assert(4 == *(int *)get_first_element(list));
+};
+
+void test_get_last_element() {
+  LinkedList list = createList();
+  int value = 4;
+  int value1 = 3;
+  int value2 = 7;
+  add_to_list(&list, &value);
+  add_to_list(&list, &value1);
+  add_to_list(&list, &value2);
+  assert(7 == *(int *)get_last_element(list));
 };
