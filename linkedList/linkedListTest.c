@@ -38,3 +38,19 @@ void test_get_last_element() {
   add_to_list(&list, &value2);
   assert(7 == *(int *)get_last_element(list));
 };
+
+void increment(void *ele) {
+  (*(int *)ele) += 1;
+  //
+};
+
+void test_for_each() {
+  LinkedList list = createList();
+  int value = 3, value1 = 5, value2 = 7;
+  add_to_list(&list, &value);
+  add_to_list(&list, &value1);
+  add_to_list(&list, &value2);
+  forEach(list, increment);
+  assert(4 == *(int *)list.head->value);
+  assert(8 == *(int *)list.tail->value);
+};

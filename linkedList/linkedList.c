@@ -11,26 +11,31 @@ LinkedList createList(void) {
 
 int add_to_list(LinkedList *list, void *value) {
   Element *e = (Element *)malloc(sizeof(Element));
-  int number = *(int *)value;
-  e->value = number;
+  e->value = value;
   e->next = NULL;
   if (list->length == 0)
     list->head = list->tail = e;
   else
-    list->tail->next = list->tail = e;
+    list->tail = list->tail->next = e;
   list->length++;
   return list->length;
   free(e);
 };
 
 void *get_first_element(LinkedList list) {
-  int head = list.head->value;
-  void *value = &head;
-  return value;
+  return list.head->value;
+  //
 };
 
 void *get_last_element(LinkedList list) {
-  int tail = list.tail->value;
-  void *value = &tail;
-  return value;
+  return list.tail->value;
+  //
+};
+
+void forEach(LinkedList list, ElementProcessor e) {
+  Element *ele = list.head;
+  while (ele != NULL) {
+    e(ele->value);
+    ele = ele->next;
+  }
 };
