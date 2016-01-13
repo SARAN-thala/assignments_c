@@ -77,3 +77,24 @@ void test_index_of() {
   assert(2 == indexOf(list, &val3));
   assert(-1 == indexOf(list, &val4));
 };
+
+void test_delete_element_at() {
+  LinkedList list = createList();
+  int val1 = 2, val2 = 3, val3 = 4, val4 = 5;
+  add_to_list(&list, &val1);
+  add_to_list(&list, &val2);
+  add_to_list(&list, &val3);
+  add_to_list(&list, &val4);
+  assert(&val2 == deleteElementAt(&list, 1));
+  assert(list.head->value == &val1);
+  assert(list.tail->value == &val4);
+  LinkedList array = createList();
+  int value1 = 2, value2 = 3, value3 = 4, value4 = 5;
+  add_to_list(&array, &value1);
+  add_to_list(&array, &value2);
+  add_to_list(&array, &value3);
+  add_to_list(&array, &value4);
+  assert(&value1 == deleteElementAt(&array, 0));
+  assert(array.head->value == &value2);
+  assert(array.tail->value == &value4);
+};

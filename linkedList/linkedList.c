@@ -60,3 +60,20 @@ int indexOf(LinkedList list, void *element) {
   }
   return -1;
 };
+
+void *deleteElementAt(LinkedList *list, int index) {
+  void *deleted_data = 0;
+  Element *temp = list->head;
+  Element *previous = NULL;
+  if (index < 0 || index >= list->length)
+    return NULL;
+  for (int i = 0; i < index; i++) {
+    previous = temp;
+    temp = temp->next;
+  }
+  deleted_data = temp->value;
+  previous ? (previous->next = temp->next) : (list->head = list->head->next);
+  temp == list->tail && (list->tail = previous);
+  list->length--;
+  return deleted_data;
+};
