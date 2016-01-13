@@ -54,3 +54,26 @@ void test_for_each() {
   assert(4 == *(int *)list.head->value);
   assert(8 == *(int *)list.tail->value);
 };
+
+void test_get_element_at() {
+  LinkedList list = createList();
+  int val1 = 2, val2 = 3, val3 = 4;
+  add_to_list(&list, &val1);
+  add_to_list(&list, &val2);
+  add_to_list(&list, &val3);
+  assert(4 == *(int *)getElementAt(list, 2));
+  assert(2 == *(int *)getElementAt(list, 0));
+  assert(NULL == (int *)getElementAt(list, 3));
+  assert(NULL == (int *)getElementAt(list, -1));
+};
+
+void test_index_of() {
+  LinkedList list = createList();
+  int val1 = 2, val2 = 3, val3 = 4, val4 = 6;
+  add_to_list(&list, &val1);
+  add_to_list(&list, &val2);
+  add_to_list(&list, &val3);
+  assert(0 == indexOf(list, &val1));
+  assert(2 == indexOf(list, &val3));
+  assert(-1 == indexOf(list, &val4));
+};

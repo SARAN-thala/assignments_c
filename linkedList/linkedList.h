@@ -20,3 +20,7 @@ void *get_last_element(LinkedList list);
 typedef void (*ElementProcessor)(void *);
 
 void forEach(LinkedList, ElementProcessor);
+
+void *getElementAt(LinkedList, int);
+
+int indexOf(LinkedList, void *);
