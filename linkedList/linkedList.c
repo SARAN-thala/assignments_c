@@ -88,3 +88,14 @@ int asArray(LinkedList list, void **array, int maxElements) {
   }
   return counter;
 };
+
+LinkedList filter(LinkedList list, MatchFunc *match, void *hint) {
+  LinkedList filtered_result = createList();
+  Element *ele = list.head;
+  while (ele != NULL) {
+    if (match(hint, ele->value) == 1)
+      add_to_list(&filtered_result, ele->value);
+    ele = ele->next;
+  }
+  return filtered_result;
+};

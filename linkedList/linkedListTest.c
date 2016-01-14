@@ -112,3 +112,23 @@ void test_as_array() {
     arr_ads += 8;
   }
 };
+
+int isEven(void *hint, void *item) {
+  return (*(int *)item % 2) ? 0 : 1;
+  //
+};
+
+void test_filter_isEven() {
+  LinkedList list = createList();
+  int arr[7] = {2, 3, 4, 6, 1, 12, 45};
+  for (size_t i = 0; i < 7; i++) {
+    add_to_list(&list, &arr[i]);
+  }
+  LinkedList output = filter(list, &isEven, NULL);
+  int *index1 = getElementAt(output, 1);
+  int *index2 = getElementAt(output, 2);
+  assert(*(int *)output.head->value == 2);
+  assert(*index1 == 4);
+  assert(*index2 == 6);
+  assert(*(int *)output.tail->value == 12);
+};
