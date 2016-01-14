@@ -118,6 +118,12 @@ int isEven(void *hint, void *item) {
   //
 };
 
+int isDivisible(void *hint, void *item) {
+  int *numberPtr = (int *)item;
+  int *hintPtr = (int *)hint;
+  return *numberPtr % *hintPtr ? 0 : 1;
+};
+
 void test_filter_isEven() {
   LinkedList list = createList();
   int arr[7] = {2, 3, 4, 6, 1, 12, 45};
@@ -131,4 +137,20 @@ void test_filter_isEven() {
   assert(*index1 == 4);
   assert(*index2 == 6);
   assert(*(int *)output.tail->value == 12);
+};
+
+void test_filter_is_divisible() {
+  int hint = 3;
+  LinkedList list = createList();
+  int arr[7] = {2, 3, 4, 6, 1, 12, 45};
+  for (size_t i = 0; i < 7; i++) {
+    add_to_list(&list, &arr[i]);
+  }
+  LinkedList output = filter(list, &isDivisible, &hint);
+  int *index1 = getElementAt(output, 1);
+  int *index2 = getElementAt(output, 2);
+  assert(*(int *)output.head->value == 3);
+  assert(*index1 == 6);
+  assert(*index2 == 12);
+  assert(*(int *)output.tail->value == 45);
 };

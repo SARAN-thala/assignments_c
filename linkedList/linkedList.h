@@ -32,3 +32,5 @@ int asArray(LinkedList, void **, int maxElements);
 typedef int(MatchFunc)(void *, void *);
 
 LinkedList filter(LinkedList, MatchFunc, void *);
+
+LinkedList reverse(LinkedList);
