@@ -94,9 +94,9 @@ void test_delete_element_at() {
   add_to_list(&array, &value2);
   add_to_list(&array, &value3);
   add_to_list(&array, &value4);
-  assert(&value1 == deleteElementAt(&array, 0));
-  assert(array.head->value == &value2);
-  assert(array.tail->value == &value4);
+  assert(&value4 == deleteElementAt(&array, 3));
+  assert(array.head->value == &value1);
+  assert(array.tail->value == &value3);
 };
 
 void test_as_array() {
@@ -153,4 +153,21 @@ void test_filter_is_divisible() {
   assert(*index1 == 6);
   assert(*index2 == 12);
   assert(*(int *)output.tail->value == 45);
+};
+
+void test_reverse() {
+  LinkedList list = createList();
+  int arr[7] = {2, 3, 4, 6, 1, 12, 45};
+  for (size_t i = 0; i < 7; i++) {
+    add_to_list(&list, &arr[i]);
+  }
+  LinkedList res = reverse(list);
+  int *index1 = getElementAt(res, 1);
+  int *index2 = getElementAt(res, 2);
+  int *index5 = getElementAt(res, 5);
+  assert(*(int *)res.head->value == 45);
+  assert(*index1 == 12);
+  assert(*index2 == 1);
+  assert(*index5 == 3);
+  assert(*(int *)res.tail->value == 2);
 };

@@ -10,7 +10,7 @@ LinkedList createList(void) {
 };
 
 int add_to_list(LinkedList *list, void *value) {
-  Element *e = (Element *)malloc(sizeof(Element));
+  Node *e = (Node *)malloc(sizeof(Node));
   e->value = value;
   e->next = NULL;
   if (list->length == 0)
@@ -33,7 +33,7 @@ void *get_last_element(LinkedList list) {
 };
 
 void forEach(LinkedList list, ElementProcessor e) {
-  Element *ele = list.head;
+  Node *ele = list.head;
   while (ele != NULL) {
     e(ele->value);
     ele = ele->next;
@@ -41,7 +41,7 @@ void forEach(LinkedList list, ElementProcessor e) {
 };
 
 void *getElementAt(LinkedList list, int index) {
-  Element *ele = list.head;
+  Node *ele = list.head;
   if (index >= list.length || index < 0)
     return NULL;
   for (int i = 1; i <= index; i++)
@@ -50,7 +50,7 @@ void *getElementAt(LinkedList list, int index) {
 };
 
 int indexOf(LinkedList list, void *element) {
-  Element *ele = list.head;
+  Node *ele = list.head;
   int count = 0;
   while (ele != NULL) {
     if (ele->value == element)
@@ -63,8 +63,8 @@ int indexOf(LinkedList list, void *element) {
 
 void *deleteElementAt(LinkedList *list, int index) {
   void *deleted_data = 0;
-  Element *temp = list->head;
-  Element *previous = NULL;
+  Node *temp = list->head;
+  Node *previous = NULL;
   if (index < 0 || index >= list->length)
     return NULL;
   for (int i = 0; i < index; i++) {
@@ -78,9 +78,17 @@ void *deleteElementAt(LinkedList *list, int index) {
   return deleted_data;
 };
 
+void print_list(LinkedList list) {
+  Node *e = list.head;
+  for (size_t i = 0; i < list.length; i++) {
+    printf("%d\n", *(int *)e->value);
+    e = e->next;
+  }
+};
+
 int asArray(LinkedList list, void **array, int maxElements) {
   int counter = 0;
-  Element *ele = list.head;
+  Node *ele = list.head;
   while (counter <= maxElements && ele != NULL) {
     array[counter] = ele->value;
     counter++;
@@ -91,11 +99,31 @@ int asArray(LinkedList list, void **array, int maxElements) {
 
 LinkedList filter(LinkedList list, MatchFunc *match, void *hint) {
   LinkedList filtered_result = createList();
-  Element *ele = list.head;
+  Node *ele = list.head;
   while (ele != NULL) {
     if (match(hint, ele->value) == 1)
       add_to_list(&filtered_result, ele->value);
     ele = ele->next;
   }
   return filtered_result;
+};
+
+LinkedList reverse(LinkedList list) {
+  list.tail = list.head;
+  Node *current = list.head;
+  Node *prev = NULL;
+  Node *next;
+  while (current != NULL) {
+    next = current->next;
+    current->next = prev;
+    prev = current;
+    current = next;
+  }
+  list.head = prev;
+  return list;
+};
+
+LinkedList map(LinkedList, ConvertFunc, void *){
+    //
+    //
 };

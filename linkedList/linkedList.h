@@ -1,15 +1,17 @@
-typedef struct element {
+typedef struct node {
   void *value;
-  struct element *next;
-} Element;
+  struct node *next;
+} Node;
 
 typedef struct list {
-  Element *head;
-  Element *tail;
+  Node *head;
+  Node *tail;
   int length;
 } LinkedList;
 
 LinkedList createList(void);
+
+void print_list(LinkedList);
 
 int add_to_list(LinkedList *, void *);
 
@@ -34,3 +36,7 @@ typedef int(MatchFunc)(void *, void *);
 LinkedList filter(LinkedList, MatchFunc, void *);
 
 LinkedList reverse(LinkedList);
+
+typedef void(ConvertFunc)(void *hint, void *sourceItem, void *destinationItem);
+
+LinkedList map(LinkedList, ConvertFunc, void *);
