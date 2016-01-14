@@ -98,3 +98,17 @@ void test_delete_element_at() {
   assert(array.head->value == &value2);
   assert(array.tail->value == &value4);
 };
+
+void test_as_array() {
+  LinkedList list = createList();
+  int arr[5] = {2, 3, 9, 6, 1};
+  for (size_t i = 0; i < 5; i++) {
+    add_to_list(&list, &arr[i]);
+  }
+  void *arr_ads = (void *)calloc(2, 8);
+  int count = asArray(list, arr_ads, 2);
+  for (size_t i = 0; i < count; i++) {
+    assert(**(int **)arr_ads == arr[i]);
+    arr_ads += 8;
+  }
+};
