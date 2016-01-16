@@ -134,3 +134,13 @@ LinkedList map(LinkedList list, ConvertFunc converter, void *hint) {
   }
   return map_result;
 };
+
+void *reduce(LinkedList list, ReducerFunc reducer, void *hint,
+             void *initialValue) {
+  Node *ele = list.head;
+  while (ele != NULL) {
+    initialValue = reducer(hint, initialValue, ele->value);
+    ele = ele->next;
+  }
+  return initialValue;
+};

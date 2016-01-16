@@ -191,3 +191,21 @@ void test_map_increment() {
   assert(*index2 == 5);
   assert(*(int *)output.tail->value == 46);
 };
+
+void *largest(void *hint, void *previousItem, void *item) {
+  if (*((char *)previousItem) > *((char *)item))
+    return previousItem;
+  return item;
+};
+
+void test_reduce_largest() {
+  int *x;
+  int initialValue = 0;
+  LinkedList list = createList();
+  int arr[7] = {2, 3, 4, 6, 1, 62, 45};
+  for (size_t i = 0; i < 7; i++) {
+    add_to_list(&list, &arr[i]);
+  }
+  int result = *(int *)reduce(list, &largest, &x, &initialValue);
+  assert(result == 62);
+};
