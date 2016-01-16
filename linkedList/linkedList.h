@@ -9,6 +9,10 @@ typedef struct list {
   int length;
 } LinkedList;
 
+typedef void (*ElementProcessor)(void *);
+typedef int(MatchFunc)(void *, void *);
+typedef void(ConvertFunc)(void *, void *, void *);
+
 LinkedList createList(void);
 
 void print_list(LinkedList);
@@ -18,8 +22,6 @@ int add_to_list(LinkedList *, void *);
 void *get_first_element(LinkedList list);
 
 void *get_last_element(LinkedList list);
-
-typedef void (*ElementProcessor)(void *);
 
 void forEach(LinkedList, ElementProcessor);
 
@@ -31,12 +33,8 @@ void *deleteElementAt(LinkedList *, int);
 
 int asArray(LinkedList, void **, int maxElements);
 
-typedef int(MatchFunc)(void *, void *);
-
 LinkedList filter(LinkedList, MatchFunc, void *);
 
 LinkedList reverse(LinkedList);
-
-typedef void(ConvertFunc)(void *hint, void *sourceItem, void *destinationItem);
 
 LinkedList map(LinkedList, ConvertFunc, void *);

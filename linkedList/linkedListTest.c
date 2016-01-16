@@ -171,3 +171,23 @@ void test_reverse() {
   assert(*index5 == 3);
   assert(*(int *)res.tail->value == 2);
 };
+
+void increment_by_1(void *hint, void *sourceItem, void *destinationItem) {
+  int a = *(int *)sourceItem;
+  *(int *)destinationItem = a + 1;
+};
+
+void test_map_increment() {
+  LinkedList list = createList();
+  int arr[7] = {2, 3, 4, 6, 1, 12, 45};
+  for (size_t i = 0; i < 7; i++) {
+    add_to_list(&list, &arr[i]);
+  }
+  LinkedList output = map(list, &increment_by_1, NULL);
+  int *index1 = getElementAt(output, 1);
+  int *index2 = getElementAt(output, 2);
+  assert(*(int *)output.head->value == 3);
+  assert(*index1 == 4);
+  assert(*index2 == 5);
+  assert(*(int *)output.tail->value == 46);
+};

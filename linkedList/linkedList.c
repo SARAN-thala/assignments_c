@@ -123,7 +123,14 @@ LinkedList reverse(LinkedList list) {
   return list;
 };
 
-LinkedList map(LinkedList, ConvertFunc, void *){
-    //
-    //
+LinkedList map(LinkedList list, ConvertFunc converter, void *hint) {
+  LinkedList map_result = createList();
+  Node *ele = list.head;
+  while (ele != NULL) {
+    void *dest = malloc(sizeof(void *));
+    converter(hint, ele->value, dest);
+    add_to_list(&map_result, dest);
+    ele = ele->next;
+  }
+  return map_result;
 };
