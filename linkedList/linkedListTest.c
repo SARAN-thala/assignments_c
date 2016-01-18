@@ -441,6 +441,34 @@ void test_as_array() {
   }
 };
 
+void test_as_array_double() {
+  LinkedList list = createList();
+  double arr[5] = {2.21, 3.223, 9.434, 6.54, 1.5454};
+  for (size_t i = 0; i < 5; i++) {
+    add_to_list(&list, &arr[i]);
+  }
+  void *arr_ads = (void *)calloc(2, 8);
+  double count = asArray(list, arr_ads, 2);
+  for (size_t i = 0; i < count; i++) {
+    assert(**(double **)arr_ads == arr[i]);
+    arr_ads += 8;
+  }
+};
+
+void test_as_array_char() {
+  LinkedList list = createList();
+  char arr[5] = {'S', 'A', 'R', 'A', 'N'};
+  for (size_t i = 0; i < 5; i++) {
+    add_to_list(&list, &arr[i]);
+  }
+  void *arr_ads = (void *)calloc(2, 8);
+  char count = asArray(list, arr_ads, 2);
+  for (size_t i = 0; i < count; i++) {
+    assert(**(char **)arr_ads == arr[i]);
+    arr_ads += 8;
+  }
+};
+
 int isEven(void *hint, void *item) {
   return (*(int *)item % 2) ? 0 : 1;
   //
@@ -498,6 +526,23 @@ void test_reverse() {
   assert(*index2 == 1);
   assert(*index5 == 3);
   assert(*(int *)res.tail->value == 2);
+};
+
+void test_reverse_double() {
+  LinkedList list = createList();
+  double arr[7] = {2.21, 3.212, 4.87, 6.34, 1.435, 12.43, 45.22};
+  for (size_t i = 0; i < 7; i++) {
+    add_to_list(&list, &arr[i]);
+  }
+  LinkedList res = reverse(list);
+  double *index1 = getElementAt(res, 1);
+  double *index2 = getElementAt(res, 2);
+  double *index5 = getElementAt(res, 5);
+  assert(*(double *)res.head->value == 45.22);
+  assert(*index1 == 12.43);
+  assert(*index2 == 1.435);
+  assert(*index5 == 3.212);
+  assert(*(double *)res.tail->value == 2.21);
 };
 
 void increment_by_1(void *hint, void *sourceItem, void *destinationItem) {
