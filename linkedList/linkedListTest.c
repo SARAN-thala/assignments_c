@@ -10,14 +10,42 @@ void test_empty_create_list() {
   assert(list.tail == NULL);
 };
 
-void test_add_to_list() {
+void test_add_to_list_int() {
   LinkedList list = createList();
   int value = 3;
   assert(add_to_list(&list, &value) == 1);
   assert(add_to_list(&list, &value) != 0);
 };
 
-void test_get_first_element() {
+void test_add_to_list_float() {
+  LinkedList list = createList();
+  float value = 1.023;
+  assert(add_to_list(&list, &value) == 1);
+  assert(add_to_list(&list, &value) != 0);
+};
+
+void test_add_to_list_double() {
+  LinkedList list = createList();
+  double value = 1.03;
+  assert(add_to_list(&list, &value) == 1);
+  assert(add_to_list(&list, &value) != 0);
+};
+
+void test_add_to_list_char() {
+  LinkedList list = createList();
+  char value = 's';
+  assert(add_to_list(&list, &value) == 1);
+  assert(add_to_list(&list, &value) != 0);
+};
+
+void test_add_to_list_string() {
+  LinkedList list = createList();
+  char value[] = "saran";
+  assert(add_to_list(&list, &value) == 1);
+  assert(add_to_list(&list, &value) != 0);
+};
+
+void test_get_first_element_int() {
   LinkedList list = createList();
   int value = 4;
   int value1 = 3;
@@ -28,7 +56,51 @@ void test_get_first_element() {
   assert(4 == *(int *)get_first_element(list));
 };
 
-void test_get_last_element() {
+void test_get_first_element_float() {
+  LinkedList list = createList();
+  float value = 4.302;
+  float value1 = 3.211;
+  float value2 = 7.02;
+  add_to_list(&list, &value);
+  add_to_list(&list, &value1);
+  add_to_list(&list, &value2);
+  assert(value == *(float *)get_first_element(list));
+};
+
+void test_get_first_element_double() {
+  LinkedList list = createList();
+  double value = 4.302;
+  double value1 = 3.211;
+  double value2 = 7.02;
+  add_to_list(&list, &value);
+  add_to_list(&list, &value1);
+  add_to_list(&list, &value2);
+  assert(4.302 == *(double *)get_first_element(list));
+};
+
+void test_get_first_element_char() {
+  LinkedList list = createList();
+  char value = 'S';
+  char value1 = 'A';
+  char value2 = 'X';
+  add_to_list(&list, &value);
+  add_to_list(&list, &value1);
+  add_to_list(&list, &value2);
+  assert('S' == *(char *)get_first_element(list));
+};
+
+void test_get_first_element_string() {
+  LinkedList list = createList();
+  char value[] = "The";
+  char value1[] = "World";
+  char value2[] = "Beautiful";
+  add_to_list(&list, &value);
+  add_to_list(&list, &value1);
+  add_to_list(&list, &value2);
+  assert(value == (char *)get_first_element(list));
+};
+
+void test_get_last_element_int() {
   LinkedList list = createList();
   int value = 4;
   int value1 = 3;
@@ -39,12 +111,79 @@ void test_get_last_element() {
   assert(7 == *(int *)get_last_element(list));
 };
 
+void test_get_last_element_float() {
+  LinkedList list = createList();
+  float value = 4.302;
+  float value1 = 3.211;
+  float value2 = 7.02;
+  add_to_list(&list, &value);
+  add_to_list(&list, &value1);
+  add_to_list(&list, &value2);
+  assert(value2 == *(float *)get_last_element(list));
+};
+
+void test_get_last_element_double() {
+  LinkedList list = createList();
+  double value = 4.302;
+  double value1 = 3.211;
+  double value2 = 7.02;
+  add_to_list(&list, &value);
+  add_to_list(&list, &value1);
+  add_to_list(&list, &value2);
+  assert(7.02 == *(double *)get_last_element(list));
+};
+
+void test_get_last_element_char() {
+  LinkedList list = createList();
+  char value = 'S';
+  char value1 = 'A';
+  char value2 = 'X';
+  add_to_list(&list, &value);
+  add_to_list(&list, &value1);
+  add_to_list(&list, &value2);
+  assert('X' == *(char *)get_last_element(list));
+};
+
+void test_get_last_element_string() {
+  LinkedList list = createList();
+  char value[] = "The";
+  char value1[] = "World";
+  char value2[] = "Beautiful";
+  add_to_list(&list, &value);
+  add_to_list(&list, &value1);
+  add_to_list(&list, &value2);
+  assert(value2 == (char *)get_last_element(list));
+};
+
 void increment(void *ele) {
   (*(int *)ele) += 1;
   //
 };
 
-void test_for_each() {
+void increment_float(void *ele) {
+  (*(float *)ele) += 1;
+  //
+};
+
+void increment_double(void *ele) {
+  (*(double *)ele) += 1;
+  //
+};
+
+void square(void *ele) {
+  (*(int *)ele *= (*(int *)ele));
+  //
+};
+void square_float(void *ele) {
+  (*(float *)ele *= (*(float *)ele));
+  //
+};
+void square_double(void *ele) {
+  (*(double *)ele *= (*(double *)ele));
+  //
+};
+
+void test_for_each_increment() {
   LinkedList list = createList();
   int value = 3, value1 = 5, value2 = 7;
   add_to_list(&list, &value);
@@ -55,7 +194,62 @@ void test_for_each() {
   assert(8 == *(int *)list.tail->value);
 };
 
-void test_get_element_at() {
+void test_for_each_increment_float() {
+  LinkedList list = createList();
+  float value = 3.2, value1 = 5.21, value2 = 7.01;
+  add_to_list(&list, &value);
+  add_to_list(&list, &value1);
+  add_to_list(&list, &value2);
+  forEach(list, increment_float);
+  assert(value == *(float *)list.head->value);
+  assert(value2 == *(float *)list.tail->value);
+};
+
+void test_for_each_increment_double() {
+  LinkedList list = createList();
+  double value = 3.223, value1 = 5.21, value2 = 7.01;
+  add_to_list(&list, &value);
+  add_to_list(&list, &value1);
+  add_to_list(&list, &value2);
+  forEach(list, increment_double);
+  assert(4.223 == *(double *)list.head->value);
+  assert(8.01 == *(double *)list.tail->value);
+};
+
+void test_for_each_square() {
+  LinkedList list = createList();
+  int value = 3, value1 = 5, value2 = 7;
+  add_to_list(&list, &value);
+  add_to_list(&list, &value1);
+  add_to_list(&list, &value2);
+  forEach(list, square);
+  assert(9 == *(int *)list.head->value);
+  assert(49 == *(int *)list.tail->value);
+};
+
+void test_for_each_square_float() {
+  LinkedList list = createList();
+  float value = 3.2, value1 = 5.1, value2 = 7.4;
+  add_to_list(&list, &value);
+  add_to_list(&list, &value1);
+  add_to_list(&list, &value2);
+  forEach(list, square_float);
+  assert(value == *(float *)list.head->value);
+  assert(value2 == *(float *)list.tail->value);
+};
+
+void test_for_each_square_double() {
+  LinkedList list = createList();
+  double value = 3.2, value1 = 5.1, value2 = 7.4;
+  add_to_list(&list, &value);
+  add_to_list(&list, &value1);
+  add_to_list(&list, &value2);
+  forEach(list, square_double);
+  assert(value == *(double *)list.head->value);
+  assert(value2 == *(double *)list.tail->value);
+};
+
+void test_get_element_at_int() {
   LinkedList list = createList();
   int val1 = 2, val2 = 3, val3 = 4;
   add_to_list(&list, &val1);
@@ -67,9 +261,101 @@ void test_get_element_at() {
   assert(NULL == (int *)getElementAt(list, -1));
 };
 
-void test_index_of() {
+void test_get_element_at_float() {
+  LinkedList list = createList();
+  float val1 = 2.23, val2 = 3.11, val3 = 4.02;
+  add_to_list(&list, &val1);
+  add_to_list(&list, &val2);
+  add_to_list(&list, &val3);
+  assert(val3 == *(float *)getElementAt(list, 2));
+  assert(val1 == *(float *)getElementAt(list, 0));
+  assert(NULL == (float *)getElementAt(list, 3));
+  assert(NULL == (float *)getElementAt(list, -1));
+};
+
+void test_get_element_at_double() {
+  LinkedList list = createList();
+  double val1 = 2.23, val2 = 3.11, val3 = 4.02;
+  add_to_list(&list, &val1);
+  add_to_list(&list, &val2);
+  add_to_list(&list, &val3);
+  assert(4.02 == *(double *)getElementAt(list, 2));
+  assert(2.23 == *(double *)getElementAt(list, 0));
+  assert(NULL == (double *)getElementAt(list, 3));
+  assert(NULL == (double *)getElementAt(list, -1));
+};
+
+void test_get_element_at_char() {
+  LinkedList list = createList();
+  char val1 = 'S', val2 = 'A', val3 = 'Q';
+  add_to_list(&list, &val1);
+  add_to_list(&list, &val2);
+  add_to_list(&list, &val3);
+  assert('Q' == *(char *)getElementAt(list, 2));
+  assert('S' == *(char *)getElementAt(list, 0));
+  assert(NULL == (char *)getElementAt(list, 3));
+  assert(NULL == (char *)getElementAt(list, -1));
+};
+
+void test_get_element_at_string() {
+  LinkedList list = createList();
+  char val1[] = "The", val2[] = "World", val3[] = "Beautiful";
+  add_to_list(&list, &val1);
+  add_to_list(&list, &val2);
+  add_to_list(&list, &val3);
+  assert(val3 == (char *)getElementAt(list, 2));
+  assert(val1 == (char *)getElementAt(list, 0));
+  assert(NULL == (char *)getElementAt(list, 3));
+  assert(NULL == (char *)getElementAt(list, -1));
+};
+
+void test_index_of_int() {
   LinkedList list = createList();
   int val1 = 2, val2 = 3, val3 = 4, val4 = 6;
+  add_to_list(&list, &val1);
+  add_to_list(&list, &val2);
+  add_to_list(&list, &val3);
+  assert(0 == indexOf(list, &val1));
+  assert(2 == indexOf(list, &val3));
+  assert(-1 == indexOf(list, &val4));
+};
+
+void test_index_of_float() {
+  LinkedList list = createList();
+  float val1 = 2.231, val2 = 3.028, val3 = 4.89, val4 = 6.21;
+  add_to_list(&list, &val1);
+  add_to_list(&list, &val2);
+  add_to_list(&list, &val3);
+  assert(0 == indexOf(list, &val1));
+  assert(2 == indexOf(list, &val3));
+  assert(-1 == indexOf(list, &val4));
+};
+
+void test_index_of_double() {
+  LinkedList list = createList();
+  double val1 = 2.231, val2 = 3.028, val3 = 4.89, val4 = 6.21;
+  add_to_list(&list, &val1);
+  add_to_list(&list, &val2);
+  add_to_list(&list, &val3);
+  assert(0 == indexOf(list, &val1));
+  assert(2 == indexOf(list, &val3));
+  assert(-1 == indexOf(list, &val4));
+};
+
+void test_index_of_char() {
+  LinkedList list = createList();
+  char val1 = 'A', val2 = 'S', val3 = 'W', val4 = 'Z';
+  add_to_list(&list, &val1);
+  add_to_list(&list, &val2);
+  add_to_list(&list, &val3);
+  assert(0 == indexOf(list, &val1));
+  assert(2 == indexOf(list, &val3));
+  assert(-1 == indexOf(list, &val4));
+};
+
+void test_index_of_string() {
+  LinkedList list = createList();
+  char val1[] = "The", val2[] = "boy", val3[] = "so", val4[] = "cool";
   add_to_list(&list, &val1);
   add_to_list(&list, &val2);
   add_to_list(&list, &val3);
@@ -90,6 +376,48 @@ void test_delete_element_at() {
   assert(list.tail->value == &val4);
   LinkedList array = createList();
   int value1 = 2, value2 = 3, value3 = 4, value4 = 5;
+  add_to_list(&array, &value1);
+  add_to_list(&array, &value2);
+  add_to_list(&array, &value3);
+  add_to_list(&array, &value4);
+  assert(&value4 == deleteElementAt(&array, 3));
+  assert(array.head->value == &value1);
+  assert(array.tail->value == &value3);
+};
+
+void test_delete_element_at_float() {
+  LinkedList list = createList();
+  float val1 = 2.12, val2 = 3.34, val3 = 4.89, val4 = 5.33;
+  add_to_list(&list, &val1);
+  add_to_list(&list, &val2);
+  add_to_list(&list, &val3);
+  add_to_list(&list, &val4);
+  assert(&val2 == deleteElementAt(&list, 1));
+  assert(list.head->value == &val1);
+  assert(list.tail->value == &val4);
+  LinkedList array = createList();
+  float value1 = 2.12, value2 = 3.34, value3 = 4.89, value4 = 5.33;
+  add_to_list(&array, &value1);
+  add_to_list(&array, &value2);
+  add_to_list(&array, &value3);
+  add_to_list(&array, &value4);
+  assert(&value4 == deleteElementAt(&array, 3));
+  assert(array.head->value == &value1);
+  assert(array.tail->value == &value3);
+};
+
+void test_delete_element_at_char() {
+  LinkedList list = createList();
+  char val1 = 'A', val2 = 'S', val3 = 'Q', val4 = 'W';
+  add_to_list(&list, &val1);
+  add_to_list(&list, &val2);
+  add_to_list(&list, &val3);
+  add_to_list(&list, &val4);
+  assert(&val2 == deleteElementAt(&list, 1));
+  assert(list.head->value == &val1);
+  assert(list.tail->value == &val4);
+  LinkedList array = createList();
+  char value1 = 'A', value2 = 'S', value3 = 'Q', value4 = 'W';
   add_to_list(&array, &value1);
   add_to_list(&array, &value2);
   add_to_list(&array, &value3);
